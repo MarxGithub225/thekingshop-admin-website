@@ -1,0 +1,98 @@
+<div class="full-page-module">
+    <div class="countryContainer">
+
+        <div class="header">
+            <span>Les bannières</span>
+            <div class="add"
+            (click) = " openModal ('800', 'px', 'createBanner', 'Ajouter une bannière', '') "
+            >
+                <mat-icon>add</mat-icon>
+            </div>
+        </div>
+        <hr>
+
+       <div class="countriesTab">
+            <div class="bannerItem" *ngFor = "let banner of moduleState.banners; let i = index"
+            [style.background-image]=" 'url(' + baseUrl + banner.link + ')' "
+            > 
+            <div class="adminBackOverlay">
+                <div class="options">
+                    <button class="actionsButton" mat-icon-button [matMenuTriggerFor]="countryMenu" aria-label="Example icon-button with a menu">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+    
+                    <mat-menu #countryMenu="matMenu">
+
+                        <button mat-menu-item 
+                        (click) = " openModal ('500', 'px', 'editBanner', 'Supprimer cette bannière ?', banner) "
+                        >
+                            <mat-icon>edit</mat-icon>
+                            <span>Modifier</span>
+                        </button>
+
+                        <button mat-menu-item 
+                        (click) = " openModal ('500', 'px', 'deletebanner', 'Supprimer ' + banner.title + ' ?', banner) "
+                        >
+                            <mat-icon>delete</mat-icon>
+                            <span>Supprimer</span>
+                        </button>
+
+                        <button mat-menu-item *ngIf = "banner.state === 1"
+                        (click)="editBannerState(banner, 0)"
+                            >
+                            <span  
+                            title="Désactiver" >
+                                <mat-icon style="color: #008080;">toggle_on</mat-icon> 
+                            </span>
+
+                            <span>Désactiver</span>
+                        </button>
+
+                        <button mat-menu-item *ngIf = "banner.state === 0"
+                        (click)="editBannerState(banner, 1)"
+                        >
+                            <span 
+                            title="Activer"
+                            >
+                                <mat-icon style="color: #dfca0e;">toggle_off</mat-icon> 
+                            </span>
+
+                            <span>Activer</span>
+                        </button>
+                    </mat-menu>
+                </div>
+
+                <div class="note">
+                    {{banner.note}}
+                </div>
+
+                <div class="infos">
+                    Actif du : {{banner.start | date}} au {{banner.end | date}}
+                </div>
+
+                <div class="toolBar">
+                            
+                    <div class="rightTools">
+
+                        <span class="notApproved" 
+                        *ngIf = "banner.state === 0 || setState (banner.end) === 0">
+                             Désactivé
+                        </span>
+
+                        <span class="approved" 
+                        *ngIf = "banner.state === 1 || setState (banner.end) === 1">
+                             Activé
+                        </span>
+                        
+                    </div>
+                    
+
+                </div>
+                
+            </div>
+            
+        </div>
+            
+       </div>
+    </div>
+</div>

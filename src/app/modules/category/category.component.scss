@@ -1,0 +1,97 @@
+
+.countryContainer {
+
+    .header {
+        font-size: 16px;
+        font-weight: bold;
+        color: #181c32;
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+
+        .add {
+            margin-left: 25px;
+            height: 30px;
+            width: 30px;
+            border-radius: 50%;
+            background-color: #F4A607;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            color: #FFFFFF;
+            box-shadow: 0 2px 1px rgb(0 0 0 / 20%);
+
+            cursor: pointer;
+        }
+    }
+    
+    .countriesTab {
+        position: fixed;
+        left: 0;
+        width: 40%;
+        height: 100vh;
+        overflow-y: auto;
+        box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+
+        .CountryItem {
+            font-weight: bold;
+            padding: 10px;
+            font-size: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .name {
+                margin-right: 15px;
+                width: 50%;
+
+                font-weight: bold;
+                font-family: 'nimbus', 'arial', sans-serif;
+                font-size: 17px;
+            }
+
+            &:hover {
+                background-color: #D2D2D2;
+                cursor: pointer;
+            }
+        }
+
+        
+    }
+
+    .citiesTab {
+        position: fixed;
+        right: 0;
+        width: calc(100% - 40%);
+        height: 100vh;
+        overflow-y: auto;
+        box-shadow: 0px 5px 5px -3px rgba(0, 0, 0, 0.2), 0px 8px 10px 1px rgba(0, 0, 0, 0.14), 0px 3px 14px 2px rgba(0, 0, 0, 0.12);
+
+        .CityItem {
+            font-weight: bold;
+            padding: 10px;
+            font-size: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .name {
+                margin-right: 15px;
+                width: 50%;
+
+                font-weight: bold;
+                font-family: 'nimbus', 'arial', sans-serif;
+                font-size: 17px;
+            }
+
+            &:hover {
+                background-color: #D2D2D2;
+                cursor: pointer;
+            }
+        }
+  
+    }
+    
+
+}

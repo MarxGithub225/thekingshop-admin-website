@@ -1,0 +1,145 @@
+<div class="full-page-module">
+    
+    <form autocomplete="off" >
+        <div class="row">
+            <div class="col-12">
+                <mat-form-field class="fullwidth" appearance="fill">
+                    <mat-label>Titre du produit</mat-label>
+                    <input [formControl]="title" matInput>
+                    <mat-error>Champs requis</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                <div class="label">Description du produit</div>
+                <angular-editor
+                [placeholder]="'Entrez votre description ici...'"
+                [formControl]="description"
+                [config]="editorConfig"></angular-editor>
+                <div class="error"> {{errMessage}} </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4 col-sm-12">
+                <mat-form-field class="fullwidth" appearance="fill">
+                    <mat-label>Catégorie</mat-label>
+                    <mat-select
+                    [formControl]="category"
+                    (selectionChange) = "checkSubcategory ($event)"
+                    >
+                    <mat-option *ngFor = "let category of categoryModuleState.categories" 
+                    [value]="category.id">{{category.title}}</mat-option>
+                    </mat-select>
+                    <mat-error>Champs requis</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-4 col-sm-12">
+                <mat-form-field class="fullwidth" appearance="fill">
+                    <mat-label>Sous catégorie</mat-label>
+                    <mat-select
+                    [formControl]="subcategory"
+                    >
+                    <mat-option *ngFor = "let cat of subcategoriesDatas" 
+                    [value]="cat.id">{{cat.title}}</mat-option>
+                    </mat-select>
+                    <mat-error>Champs requis</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-4 col-sm-12">
+                <mat-form-field class="fullwidth" appearance="fill">
+                    <mat-label>Prix du produit</mat-label>
+                    <input [formControl]="price" matInput (keypress)="numberOnly($event)">
+                    <span matSuffix>FCFA</span>
+                    <mat-error>Champs requis</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="imageTitle">Ajouter une ou plusieurs images (6 images au maximum)</div>
+        <hr>
+        
+
+        <div class="croppingArea" *ngIf = "imageChangedEvent">
+            <image-cropper
+                [imageChangedEvent]="imageChangedEvent"
+                [maintainAspectRatio]="true"
+                [aspectRatio]="1 / 1"
+                [resizeToWidth]="400"
+                [resizeToHeight]="400"
+                [cropperMinWidth]="128"
+                format="png"
+                (imageCropped)="imageCropped($event)"
+                (imageLoaded)="imageLoaded()"
+                (cropperReady)="cropperReady()"
+                (loadImageFailed)="loadImageFailed()"
+            ></image-cropper>
+            <div class="crropedImage">
+                <img [src]="croppedImage" />
+                <button mat-button (click) = "pushImage ()">Ajouter</button>
+            </div>
+            
+        </div>
+
+        <div class="imagesArea">
+            
+            <div class="imageItem" *ngFor="let img of images" [style.background-image]="'url(' + img + ')'">
+                <div class="imageRemove" (click)="removeImage(img)" title="Retirer l'image"> x </div>
+            </div>
+            <button mat-mini-fab (click)="uploadFile()" type="button" *ngIf = "images.length < 6">
+                <mat-icon>add</mat-icon>
+            </button>
+        </div>
+        <div class="hideInput">
+            <input type="file" accept="image/*"  onChange={this.onImageChange} id="imageInput" (change)="fileChangeEvent($event)" style="display: none;" />
+            <label for="imageInput"><i className ="fas fa-"></i></label>
+        </div>
+
+        <mat-slide-toggle [(ngModel)]="isChecked" name = "isChecked" color = "primary">Ajouter une promotion</mat-slide-toggle>
+
+        <div class="row"></div>
+        
+        <div class="row" *ngIf = "isChecked">
+            <div class="col-md-4 colsm-12">
+                <mat-form-field class="fullwidth" appearance="fill">
+                    <mat-label>Début</mat-label>
+                    <input matInput [matDatepicker]="startPick" [formControl]="start" [min]="minStartDate">
+                    <mat-datepicker-toggle matSuffix [for]="startPick"></mat-datepicker-toggle>
+                    <mat-datepicker #startPick></mat-datepicker>
+                    <mat-error>Champs requis</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-4 colsm-12">
+                <mat-form-field class="fullwidth" appearance="fill">
+                    <mat-label>Fin</mat-label>
+                    <input matInput [matDatepicker]="endPick" [formControl]="end" [min]="minEndDate">
+                    <mat-datepicker-toggle matSuffix [for]="endPick"></mat-datepicker-toggle>
+                    <mat-datepicker #endPick></mat-datepicker>
+                    <mat-error>Champs requis</mat-error>
+                </mat-form-field>
+            </div>
+
+            <div class="col-md-4 col-sm-12">
+                <mat-form-field class="fullwidth" appearance="fill">
+                    <mat-label>Coût de la promotion</mat-label>
+                    <input [formControl]="promo" matInput (keypress)="numberOnly($event)">
+                    <span matSuffix>FCFA</span>
+                    <mat-error>Champs requis</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="stepButtons">
+            <div class="button"> &nbsp;</div>
+            <div class="button">
+                <button mat-flat-button color = "primary" type="button" (click)="createCountry()">Enregistrer</button>
+            </div>
+        </div>
+    </form>
+
+</div>

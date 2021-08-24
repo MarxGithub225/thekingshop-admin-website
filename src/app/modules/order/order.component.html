@@ -1,0 +1,127 @@
+<div class="full-page-module">
+    <div class="countryContainer">
+
+        <div class="header">
+            <span>Les commandes</span>
+            
+        </div>
+        <hr>
+
+        <div class="row">
+            <div class="col-12">
+                <mat-form-field class="fullwidth" appearance="fill">
+                    <mat-label>Rechercher un produit ici</mat-label>
+                    <input name="search" [(ngModel)]="searchText" matInput>
+                    <mat-error>Champs requis</mat-error>
+                </mat-form-field>
+            </div>
+        </div>
+
+        <div class="ordersDatas">
+
+            <div class="row">
+                <div class="col-md-3" *ngFor = "let a of orders | filter:searchText">
+                    <div class="productItem" 
+                    [style.background-image]="'url(assets/imgs/panier.jpg)'"
+
+                    (click) = "selectOrder (a) ; total(a)"
+                    >
+                        
+    
+                        <div class="productBackOverlay">
+                            
+                            <div class="productTitle">
+                                {{a.date | date}}
+                            </div>
+                            
+                            <div class="toolBar">
+                            
+                                <div class="rightTools">
+    
+                                    <span class="waiting" 
+                                    *ngIf = "a.state === '0'">
+                                         En attente
+                                    </span>
+    
+                                    <span class="approved" 
+                                    *ngIf = "a.state === '1'">
+                                         Traitée
+                                    </span>
+
+                                    <span class="notApproved" 
+                                    *ngIf = "a.state === '2'">
+                                         Annulée
+                                    </span>
+                                    
+                                </div>
+                                
+                                
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="orderDetails">
+            <p class="note">Les détails de la commande s'afficheront ici</p>
+
+            <table class="table" style="width: 100%;" *ngIf = "isSelected">
+                <thead >
+                    <th>Commandé par</th>
+                    <th>Téléphone</th>
+                    <th>Ville</th>
+                    <th>Adresse</th>
+                </thead>
+
+                <tbody>
+                    <tr>
+                        <td>{{orderSelected.user.name}}</td>
+                        <td>{{orderSelected.user.phone}}</td>
+                        <td>{{orderSelected.user.city}}</td>
+                        <td>{{orderSelected.user.address}}</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <table class="table" style="width: 100%;" *ngIf = "isSelected">
+                <thead >
+                    <th style="width: 50%;">Produit</th>
+                    <th>Quantité</th>
+                    <th>coût</th>
+                    <th>total</th>
+                </thead>
+
+                <tbody>
+                    <tr *ngFor = "let p of orderSelected.data">
+                        <td>
+                            <p>{{p.product.title}}</p>
+                            <div>
+                                <img [src]="baseUrl + p.product.images[0].link" alt="" width="130">
+                            </div>
+                        </td>
+                        <td>{{p.quantity}}</td>
+                        <td>{{p.price}}</td>
+                        <td>{{p.quantity * p.price}}</td>
+                    </tr>
+
+                    <tr>
+                        <td colspan="4" style="float: right; font-weight: bold;"> Montant à payer : {{totalOrder | number : '1.0-2'}} FCFA</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="stepButtons" *ngIf = "isSelected">
+                <div class="button"> 
+                    <button mat-flat-button color = "warn" type="button" (click)="cancelOrder()">Annuler la commande</button>
+                </div>
+                <div class="button">
+                    <button mat-flat-button color = "primary" type="button" (click)="paidOrder()">Commande payée et livrée</button>
+                </div>
+            </div>
+        </div>
+
+        
+    </div>
+</div>

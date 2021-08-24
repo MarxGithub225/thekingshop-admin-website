@@ -1,0 +1,66 @@
+<div class="full-page-module">
+    <div class="countryContainer">
+
+        <div class="header">
+            <span>Les catégories & souscatégories</span>
+            <div class="add"
+            (click) = " openModal ('500', 'px', 'createCategory', 'Ajouter une catégorie ou une sous catégorie', '') "
+            >
+                <mat-icon>add</mat-icon>
+            </div>
+        </div>
+        <hr>
+
+       <div class="countriesTab">
+            <div class="CountryItem" *ngFor = "let category of moduleState.categories; let i = index"
+            
+            > 
+            <div class="name"
+            (click) = "active === i ; getSubCategories (category.id)"
+            >{{category.title}}</div>
+
+            <div class="options">
+                <button mat-icon-button [matMenuTriggerFor]="countryMenu" aria-label="Example icon-button with a menu">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+
+                <mat-menu #countryMenu="matMenu">
+                    
+                    <button mat-menu-item 
+                    (click) = " openModal ('500', 'px', 'deleteCategory', 'Supprimer ' + category.title + ' ?', category) "
+                    >
+                        <mat-icon>delete</mat-icon>
+                        <span>Supprimer</span>
+                  </button>
+                </mat-menu>
+            </div>
+        </div>
+            
+       </div>
+
+       <div class="citiesTab">
+            <div class="CityItem" *ngFor = "let subcat of subacetgoriesDatas ; let i = index"
+            > 
+        
+            <div class="name"
+            >{{subcat.title}}</div>
+
+            <div class="options">
+                <button mat-icon-button [matMenuTriggerFor]="countryMenu" aria-label="Example icon-button with a menu">
+                    <mat-icon>more_vert</mat-icon>
+                </button>
+
+                <mat-menu #countryMenu="matMenu">
+                    
+                    <button mat-menu-item 
+                    (click) = " openModal ('500', 'px', 'deleteSubcategory', 'Supprimer ' + subcat.title + ' ?', subcat) "
+                    >
+                        <mat-icon>delete</mat-icon>
+                        <span>Supprimer</span>
+                  </button>
+                </mat-menu>
+            </div>
+        </div>
+       </div>
+    </div>
+</div>
